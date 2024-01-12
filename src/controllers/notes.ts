@@ -3,13 +3,13 @@ import NotesService from "../services/notes"
 
 
 export default class NotesController {
-    static getNotes(req: Request, res: Response) {        
-        res.json({ notes: NotesService.getAll() })
+    static async getNotes(req: Request, res: Response) {        
+        res.json({ notes: await NotesService.getAll() })
     }
 
-    static getNote(req: Request, res: Response) {
-        let id = req.params.id
-        res.json({ note: NotesService.getByID(id) })
+    static async getNote(req: Request, res: Response) {
+        let id = Number(req.params.id)
+        res.json({ note: await NotesService.getByID(id) })
     }
 
     static postNote(req: Request, res: Response) {
@@ -19,7 +19,8 @@ export default class NotesController {
         if (NotesService.check(title, content)) {
             res.json({ note: NotesService.create(title, content) })
         }
-        
-        res.json({ message: "Error on create" })
+        else {
+            res.json({ message: "Error on create." })
+        }
     }
 }
