@@ -12,12 +12,12 @@ export default class NotesController {
         res.json({ note: await NotesService.getByID(id) })
     }
 
-    static postNote(req: Request, res: Response) {
+    static async postNote(req: Request, res: Response) {
         let title = req.body.title || ""
         let content = req.body.content || ""
     
         if (NotesService.check(title, content)) {
-            res.json({ note: NotesService.create(title, content) })
+            res.json({ note: await NotesService.create(title, content) })
         }
         else {
             res.json({ message: "Error on create." })
