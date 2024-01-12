@@ -1,13 +1,4 @@
-class Note {
-    title: string = ""
-    content: string = ""
-    constructor(title: string, content: string) {
-        this.title = title
-        this.content = content
-    }
-}
-
-const notes: Note[] = []
+import { Note } from "../models/note"
 
 export default class NotesService {
     static check(title: string, content: string): boolean {
@@ -17,17 +8,22 @@ export default class NotesService {
         return false
     }
     
-    static create(title: string, content: string): Note {
-        let note = new Note(title, content)
-        notes.push(note)
+    static create(title: string, content: string): unknown {
+        let note = Note.build({ title, content })
+        note.save()
+        console.log(typeof note)
         return note
     }
 
-    static get(title: string): Note[] {
-        return notes.filter(note => note.title === title)
+    static getByTitle(title: string): unknown {
+        return Note.findOne({ where: { title }})
     }
 
-    static getAll(): Note[] {
-        return notes
+    static getByID(id: string): unknown {
+        return Note.findOne({ where: { id }})
+    }
+
+    static getAll(): unknown {
+        return Note.findAll()
     }
 }

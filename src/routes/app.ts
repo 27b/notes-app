@@ -12,4 +12,6 @@ router.get('/', (req: Request, res: Response) => {
 
 router.get('/notes', (req: Request, res: Response) => NotesController.getNotes(req, res))
 
+router.get('/notes/:id', (req: Request, res: Response) => NotesController.getNote(req, res))
+
 router.post('/notes', (req: Request, res: Response) => NotesController.postNote(req, res))
